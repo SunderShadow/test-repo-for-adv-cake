@@ -1,7 +1,10 @@
 <?php
 
 beforeEach(function () {
-    $this->strRev = new \Sunder\Tests\StrRev([',', ':', '\'', '"', '»', '«']);
+    $this->strRev = new \Sunder\Tests\StrRev(
+        [',', ':', '\'', '"', '»', '«'],
+        ['-', '`']
+    );
 });
 
 it('Letter case', function (string $input, string $output) {
@@ -11,14 +14,17 @@ it('Letter case', function (string $input, string $output) {
     'cyrillic'                  => ['Мышь', 'Ьшым'],
     'single uppercase'          => ['houSe', 'esuOh'],
     'single cyrillic uppercase' => ['домИК', 'кимОД'],
-    'multiple uppercase'        => ['elEpHant', 'tnAhPele']
+    'multiple uppercase'        => ['elEpHant', 'tnAhPele'],
+    'latin hyphen'              => ['third-part', 'driht-trap']
 ]);
 
 it('Special characters', function ($input, $expected) {
     expect($this->strRev->reverseString($input))->toBe($expected);
 })->with([
-    'single latin'      => ['cat,', 'tac,'],
-    'single cyrillic'   => ['Зима:', 'Амиз:'],
-    'multiple latin'    => ['is \'cold\' now', 'si \'dloc\' won'],
-    'multiple cyrillic' => ['это «Так» "просто"', 'отэ «Кат» "отсорп"'],
+    'single latin'       => ['cat,', 'tac,'],
+    'single cyrillic'    => ['Зима:', 'Амиз:'],
+    'multiple latin'     => ['is \'cold\' now', 'si \'dloc\' won'],
+    'multiple cyrillic'  => ['это «Так» "просто"', 'отэ «Кат» "отсорп"'],
+    'special chars only apostrophe' => ['```', '```'],
+    'special chars only (")'        => ['"""', '"""']
 ]);

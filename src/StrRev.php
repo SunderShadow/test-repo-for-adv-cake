@@ -10,8 +10,13 @@ class StrRev
     /**
      * @param array $skipChars
      * Символы которые не надо разворачивать
+     * @param array $wordDelimiters
+     * Любые символы-разделители слов (типа 'человек-робот')
      */
-    public function __construct(private readonly array $skipChars)
+    public function __construct(
+        private readonly array $skipChars,
+        private readonly array $wordDelimiters
+    )
     {
     }
 
@@ -27,6 +32,18 @@ class StrRev
         /== Время исполнения: O(n)
         /== Используемая память: O(n)
         */
+
+        // Делим частные случаи типа дефиса и апострофа
+        foreach ($this->wordDelimiters as $delimiter) {
+            if (str_contains($str, $delimiter)) {
+                $subWords = explode($delimiter, $str);
+                foreach ($subWords as &$subWord) {
+                    $subWord = $this->reverseWord($subWord);
+                }
+
+                return implode($delimiter, $subWords);
+            }
+        }
 
         // Разбиваем мультибайт на массив
         // Так проще работать
@@ -72,7 +89,7 @@ class StrRev
         return implode('', $strSplit);
     }
 
-    public function reverseString(string $str)
+    public function reverseString(string $str): string
     {
         $explodedStr = explode(' ', $str);
 
