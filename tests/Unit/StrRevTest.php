@@ -18,7 +18,7 @@ it('Letter case', function (string $input, string $output) {
     'latin hyphen'              => ['third-part', 'driht-trap']
 ]);
 
-it('Special characters', function ($input, $expected) {
+it('Special characters', function (string $input, string $expected) {
     expect($this->strRev->reverseString($input))->toBe($expected);
 })->with([
     'single latin'       => ['cat,', 'tac,'],

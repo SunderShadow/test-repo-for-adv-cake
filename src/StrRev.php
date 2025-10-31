@@ -11,7 +11,7 @@ class StrRev
      * @param array $skipChars
      * Символы которые не надо разворачивать
      * @param array $wordDelimiters
-     * Любые символы-разделители слов (типа 'человек-робот')
+     * Любые символы-разделители слов (типа апострофа в 'человек-робот')
      */
     public function __construct(
         private readonly array $skipChars,
@@ -22,7 +22,7 @@ class StrRev
 
     /**
      * Меняет местами символы в слове
-     * за исключением StrRev::$specialChars
+     * за исключением StrRev::$skipChars
      * @param string $str
      * @return string
      */
