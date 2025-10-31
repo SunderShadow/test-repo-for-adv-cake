@@ -1,0 +1,6 @@
+# IDE meta
+.idea
+.vs
+
+# Composer files
+vendor

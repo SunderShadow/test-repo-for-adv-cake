@@ -1,0 +1,24 @@
+{
+  "require": {
+    "php": ">=8.3",
+    "ext-intl": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Sunder\\Tests\\": ["./src"]
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": ["./tests"]
+    }
+  },
+  "require-dev": {
+    "pestphp/pest": "^4.1"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
+}
