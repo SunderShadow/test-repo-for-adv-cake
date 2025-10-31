@@ -1,24 +1,24 @@
 <?php
 
-class Data {
-    static \Sunder\Tests\StrRev $strRev;
-}
-
-Data::$strRev = new \Sunder\Tests\StrRev();
-
-test('Letter case', function () {
-
-    $executionMap = [
-        'Cat' => 'Tac',
-        'Мышь' => 'Ьшым',
-        'houSe' => 'esuOh',
-        'домИК' => 'кимОД',
-        'elEpHant' => 'tnAhPele'
-    ];
-
-    $expectation = expect(true)->toBeTrue();
-
-    foreach ($executionMap as $input => $expectedOutput) {
-        $expectation = $expectation->and(Data::$strRev->reverse($input))->toBe($expectedOutput);
-    }
+beforeEach(function () {
+    $this->strRev = new \Sunder\Tests\StrRev([',', ':', '\'', '"', '»', '«']);
 });
+
+it('Letter case', function (string $input, string $output) {
+    expect($this->strRev->reverseString($input))->toBe($output);
+})->with([
+    'latin'                     => ['Cat', 'Tac'],
+    'cyrillic'                  => ['Мышь', 'Ьшым'],
+    'single uppercase'          => ['houSe', 'esuOh'],
+    'single cyrillic uppercase' => ['домИК', 'кимОД'],
+    'multiple uppercase'        => ['elEpHant', 'tnAhPele']
+]);
+
+it('Special characters', function ($input, $expected) {
+    expect($this->strRev->reverseString($input))->toBe($expected);
+})->with([
+    'single latin'      => ['cat,', 'tac,'],
+    'single cyrillic'   => ['Зима:', 'Амиз:'],
+    'multiple latin'    => ['is \'cold\' now', 'si \'dloc\' won'],
+    'multiple cyrillic' => ['это «Так» "просто"', 'отэ «Кат» "отсорп"'],
+]);
